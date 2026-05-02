@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ── En v4 los tokens se definen con @theme, no con tailwind.config.ts ── */
+@theme {
+
+    /* ── Grises ────────────────────────────────────────────────────────── */
+    --color-gray-50: #f4f4f6;
+    --color-gray-100: #ebebed;
+    --color-gray-200: #d8d8dc;
+    --color-gray-300: #a8a5b4;
+    --color-gray-400: #7c7a8a;
+    --color-gray-500: #5a5868;
+    --color-gray-700: #2e2c3a;
+    --color-gray-900: #17151f;
+
+    /* ── Primary — morados ─────────────────────────────────────────────── */
+    --color-primary-50: #f5f0ff;
+    --color-primary-100: #ede4ff;
+    --color-primary-200: #d4bfff;
+    --color-primary-400: #9b7dd4;
+    --color-primary-500: #7c5cbf;
+    --color-primary-700: #5e3fa3;
+
+    /* ── Success — verdes ──────────────────────────────────────────────── */
+    --color-success-50: #f0f7f2;
+    --color-success-100: #d8eede;
+    --color-success-200: #a8d4b4;
+    --color-success-500: #2d6b45;
+    --color-success-700: #1e4a2f;
+
+    /* ── Info — azules ─────────────────────────────────────────────────── */
+    --color-info-50: #f0f4ff;
+    --color-info-100: #dce6ff;
+    --color-info-200: #a8bcf0;
+    --color-info-500: #2a4a8f;
+    --color-info-700: #1a3070;
+
+    /* ── Danger — rojos ────────────────────────────────────────────────── */
+    --color-danger-100: #fde8e8;
+    --color-danger-500: #c0392b;
+
+    /* ── Tipografías ───────────────────────────────────────────────────── */
+    --font-display: "Playfair Display", serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-sans: "Outfit", sans-serif;
+
+    /* ── Animaciones ───────────────────────────────────────────────────── */
+    --animate-fade-up: fadeUp 0.5s ease-out;
+    --animate-cell-in: cellIn 0.25s ease-out;
+    --animate-pulse-dot: pulseDot 1.8s ease-in-out infinite;
+    --animate-arrow-bounce: arrowBounce 0.9s ease-in-out infinite;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cellIn {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(0.6);
+        opacity: 0.4;
+    }
+}
+
+@keyframes arrowBounce {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-6px);
+    }
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ebebed;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a8a5b4;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5868;
+}
+
+/* ── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+    background: #ede4ff;
+    color: #7c5cbf;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+    -webkit-font-smoothing: antialiased;
+}
