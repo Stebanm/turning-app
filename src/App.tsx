@@ -8,6 +8,7 @@ import StatePanel from '@/components/StatePanel'
 import TransitionTable from '@/components/TransitionTable'
 import GenericButton from './components/GenericButton'
 import MorseReference from './components/MorseReference'
+import { VALIDATION_NUMBERS } from './utils/constants'
 
 type ActiveTab = 'sim' | 'table' | 'ref'
 
@@ -51,7 +52,20 @@ export default function App() {
   const compile = useCallback((text?: string) => {
     stopPlay()
     const raw = (text ?? inputText).trim()
-    if (!raw) { setError('Ingresa al menos un carácter.'); setCompiled(false); return }
+
+    if (!raw) {
+      setError('Ingresa al menos un carácter.');
+      setCompiled(false);
+      return;
+    };
+
+    // ── Límite de 30 caracteres ──────────────────────────────────────────
+    if (raw.length > 30) {
+      setError('Máximo 30 caracteres permitidos.');
+      setCompiled(false);
+      return;
+    };
+    
     const norm = normalizeInput(raw)
     const chars = norm.split('')
     const bad = [...new Set(chars.filter(c => !isSupported(c)))]
@@ -138,7 +152,7 @@ export default function App() {
               value={inputText}
               onChange={e => { setInputText(e.target.value); setCompiled(false); stopPlay() }}
               onKeyDown={e => e.key === 'Enter' && compile()}
-              maxLength={20}
+              maxLength={VALIDATION_NUMBERS.MAX_INPUT_COMPILE}
               spellCheck={false}
               placeholder="Escribe texto"
               className="w-full font-mono text-lg font-semibold bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 tracking-widest placeholder:text-gray-300 placeholder:font-normal focus:outline-none focus:border-primary-500 focus:bg-white transition-colors"

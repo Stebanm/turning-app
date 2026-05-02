@@ -1,0 +1,3 @@
+export const VALIDATION_NUMBERS = {
+    MAX_INPUT_COMPILE: 20
+};
