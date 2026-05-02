@@ -12,7 +12,7 @@ import MorseReference from './components/MorseReference'
 type ActiveTab = 'sim' | 'table' | 'ref'
 
 const SPEED = 350
-const EXAMPLES = ['HOLA', 'SOS', 'DIEGO', 'MORSE 2025', 'HELLO WORLD']
+const EXAMPLES = ['HOLA', 'SOS', 'JUAN', 'MORSE 2025', 'HELLO WORLD']
 
 const prefersReduced =
   typeof window !== 'undefined'
@@ -20,7 +20,7 @@ const prefersReduced =
     : false
 
 export default function App() {
-  const [inputText, setInputText] = useState<string>('DIEGO')
+  const [inputText, setInputText] = useState<string>('')
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [playing, setPlaying] = useState<boolean>(false)
@@ -140,7 +140,7 @@ export default function App() {
               onKeyDown={e => e.key === 'Enter' && compile()}
               maxLength={20}
               spellCheck={false}
-              placeholder="Escribe texto (A–Z, 0–9, signos ITU…)"
+              placeholder="Escribe texto"
               className="w-full font-mono text-lg font-semibold bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 tracking-widest placeholder:text-gray-300 placeholder:font-normal focus:outline-none focus:border-primary-500 focus:bg-white transition-colors"
             />
             {error && (
@@ -163,8 +163,8 @@ export default function App() {
             {EXAMPLES.map(ex => (
               <button
                 key={ex}
-                onClick={() => compile(ex)}
-                className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 font-mono font-medium transition-colors"
+                onClick={() => { setInputText(ex); compile(ex) }}
+                className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 font-mono font-medium transition-colors cursor-pointer"
               >
                 {ex}
               </button>
@@ -184,7 +184,7 @@ export default function App() {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={[
-                    'text-xs font-semibold px-4 py-2 rounded-lg transition-all font-sans',
+                    'text-xs font-semibold px-4 py-2 rounded-lg transition-all font-sans cursor-pointer',
                     activeTab === tab
                       ? 'bg-primary-100 text-primary-700 shadow-sm'
                       : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100',
@@ -233,30 +233,6 @@ export default function App() {
             )}
           </div>
         </>
-      )}
-
-      {/* ── Estado vacío inicial ─────────────────────────────────────────── */}
-      {!compiled && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm mt-2">
-          <div className="text-3xl mb-3">⚙</div>
-          <h2 className="font-display text-xl text-gray-900 mb-2">Listo para simular</h2>
-          <p className="text-gray-500 text-sm">
-            Ingresa texto y presiona{' '}
-            <span className="text-primary-500 font-bold">Compilar</span>{' '}
-            para iniciar la traducción.
-          </p>
-          <div className="flex gap-2 justify-center flex-wrap mt-4">
-            {EXAMPLES.map(ex => (
-              <button
-                key={ex}
-                onClick={() => compile(ex)}
-                className="text-sm px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 font-sans transition-colors"
-              >
-                {ex}
-              </button>
-            ))}
-          </div>
-        </div>
       )}
     </motion.div>
   )
