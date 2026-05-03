@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import type { Snapshot, MachineStatus } from '@/types/turing'
-import { computeAllSteps, getVisibleWindow, extractMorseOutput } from '@/utils/turingEngine'
+import { computeAllSteps, getVisibleWindow, extractMorseOutput, getFullOutputWindow } from '@/utils/turingEngine'
 import { normalizeInput, isSupported } from '@/utils/morseCode'
 import TapeDisplay from '@/components/TapeDisplay'
 import StatePanel from '@/components/StatePanel'
@@ -65,7 +65,7 @@ export default function App() {
       setCompiled(false);
       return;
     };
-    
+
     const norm = normalizeInput(raw)
     const chars = norm.split('')
     const bad = [...new Set(chars.filter(c => !isSupported(c)))]
@@ -104,7 +104,9 @@ export default function App() {
             : 'paused'
 
   const { cells: visibleCells, offset } = snap
-    ? getVisibleWindow(snap.tape, snap.head)
+    ? (status === 'halt' || status === 'reject')
+      ? getFullOutputWindow(snap.tape)        // muestra toda la cinta al terminar
+      : getVisibleWindow(snap.tape, snap.head) // ventana móvil durante ejecución
     : { cells: [], offset: 0 }
 
   const morseOutput = snap ? extractMorseOutput(snap.tape) : ''

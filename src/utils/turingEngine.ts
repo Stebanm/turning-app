@@ -238,3 +238,20 @@ export function extractMorseOutput(tape: TapeCell[]): string {
         .replace(/\|+$/, '')
         .replace(/\|/g, ' ')
 }
+
+
+// Agrega esta función al final de turingEngine.ts
+export function getFullOutputWindow(
+    tape: TapeCell[],
+): { cells: TapeCell[]; offset: number } {
+    // Muestra desde el primer blanco izquierdo hasta el último símbolo escrito
+    const firstNonBlank = tape.findIndex(c => c.sec !== 'blank')
+    const lastWritten = tape.reduce((last, c, i) =>
+        (c.written || c.sec === 'sep' || (c.sec === 'input')) ? i : last, 0
+    )
+
+    const start = Math.max(0, firstNonBlank - 1)
+    const end = Math.min(tape.length - 1, lastWritten + 2)
+
+    return { cells: tape.slice(start, end + 1), offset: start }
+}
