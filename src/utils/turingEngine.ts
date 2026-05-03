@@ -50,9 +50,12 @@ export function getVisibleWindow(
     windowSize = 19,
 ): { cells: TapeCell[]; offset: number } {
     const half = Math.floor(windowSize / 2)
-    let start = Math.max(0, head - half)
-    let end = Math.min(tape.length - 1, start + windowSize - 1)
-    start = Math.max(0, end - windowSize + 1)
+    const maxStart = tape.length - windowSize
+
+    // Centra la ventana en el cabezal, respetando los límites de la cinta
+    const start = Math.min(Math.max(0, head - half), Math.max(0, maxStart))
+    const end = Math.min(start + windowSize - 1, tape.length - 1)
+
     return { cells: tape.slice(start, end + 1), offset: start }
 }
 

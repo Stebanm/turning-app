@@ -4,20 +4,18 @@ import type { Variants } from 'framer-motion'
 import { MORSE_MAP, UNSUPPORTED_NOTES } from '@/utils/morseCode'
 
 
-type RefCategory = 'letters' | 'numbers' | 'signs' | 'spanish'
+type RefCategory = 'letters' | 'numbers' | 'signs'
 
 const CATEGORY_LABELS: Record<RefCategory, string> = {
     letters: 'Letras A–Z',
     numbers: 'Dígitos 0–9',
-    signs: 'Signos ITU',
-    spanish: 'Español',
+    signs: 'Signos',
 }
 
 const CATEGORY_CHARS: Record<RefCategory, string[]> = {
     letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
     numbers: '0123456789'.split(''),
     signs: ['.', ',', '?', '!', '/', '@', '=', '+', '-', '"', '(', ')'],
-    spanish: ['Ñ', 'Á', 'É', 'Ü'],
 }
 
 const containerVariants: Variants = {
@@ -89,7 +87,7 @@ export default function MorseReference() {
             {/* Limitaciones */}
             <div className="mt-5 bg-gray-100 rounded-xl p-4 border border-gray-200">
                 <div className="text-[11px] font-bold tracking-widest uppercase text-gray-500 mb-3 font-sans">
-                    Limitaciones del estándar ITU-R M.1677-1
+                    Limitaciones estándar
                 </div>
                 {UNSUPPORTED_NOTES.map((note, i) => (
                     <div
